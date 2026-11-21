@@ -51,6 +51,13 @@ namespace FOPFinalOutput
 
             users.Add(new User()
             {
+                Username = "Ocampo_admin",
+                Password = "Ocampo_password",
+                Role = "Admin"
+            });
+
+            users.Add(new User()
+            {
                 Username = "Tabayag_admin",
                 Password = "Tabayag_password",
                 Role = "Admin"
@@ -75,6 +82,13 @@ namespace FOPFinalOutput
                 Username = "Mapandi_warehouse",
                 Password = "Mapandi_password",
                 Role = "Warehouse",
+            });
+
+            users.Add(new User()
+            {
+                Username = "Ocampo_warehouse",
+                Password = "Ocampo_password",
+                Role = "Admin"
             });
             
             users.Add(new User()
@@ -103,6 +117,13 @@ namespace FOPFinalOutput
                 Username = "Mapandi_user",
                 Password = "Mapandi_password",
                 Role = "User"
+            });
+
+            users.Add(new User()
+            {
+                Username = "Ocampo_user",
+                Password = "Ocampo_password",
+                Role = "Admin"
             });
 
             users.Add(new User()
