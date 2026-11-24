@@ -1,0 +1,482 @@
+﻿using System;
+using System.Collections.Generic;
+
+class User
+{
+    public string Username;
+    public string Password;
+    public string Role;
+    public bool Active = true;
+}
+
+class Product
+{
+    public string Name;
+    public int Quantity;
+    public bool Active = true;
+    public DateTime CreatedDate;
+    public string CreatedBy;
+}
+
+class Order
+{
+    public string ProductName;
+    public int Quantity;
+}
+
+class Program
+{
+    static List<User> users = new List<User>();
+    static List<Product> products = new List<Product>();
+    static List<Order> orders = new List<Order>();
+
+    static void Main(string[] args)
+    {
+        users.Add(new User()
+        {
+            Username = "Cuartero_admin",
+            Password = "Cuartero_password",
+            Role = "Admin"
+        });
+
+        users.Add(new User()
+        {
+            Username = "Mapandi_admin",
+            Password = "Mapandi_password",
+            Role = "Admin"
+        });
+
+        users.Add(new User()
+        {
+            Username = "Ocampo_admin",
+            Password = "Ocampo_password",
+            Role = "Admin"
+        });
+
+        users.Add(new User()
+        {
+            Username = "Tabayag_admin",
+            Password = "Tabayag_password",
+            Role = "Admin"
+        });
+
+        users.Add(new User()
+        {
+            Username = "Tagala_admin",
+            Password = "Tagala_password",
+            Role = "Admin"
+        });
+
+        users.Add(new User()
+        {
+            Username = "Cuartero_warehouse",
+            Password = "Cuartero_password",
+            Role = "Warehouse"
+        });
+
+        users.Add(new User()
+        {
+            Username = "Mapandi_warehouse",
+            Password = "Mapandi_password",
+            Role = "Warehouse",
+        });
+
+        users.Add(new User()
+        {
+            Username = "Ocampo_warehouse",
+            Password = "Ocampo_password",
+            Role = "Admin"
+        });
+
+        users.Add(new User()
+        {
+            Username = "Tabayag_warehouse",
+            Password = "Tabayag_password",
+            Role = "Warehouse",
+        });
+
+        users.Add(new User()
+        {
+            Username = "Tagala_warehouse",
+            Password = "Tagala_password",
+            Role = "Warehouse",
+        });
+
+        users.Add(new User()
+        {
+            Username = "Cuartero_user",
+            Password = "Cuartero_password",
+            Role = "User"
+        });
+
+        users.Add(new User()
+        {
+            Username = "Mapandi_user",
+            Password = "Mapandi_password",
+            Role = "User"
+        });
+
+        users.Add(new User()
+        {
+            Username = "Ocampo_user",
+            Password = "Ocampo_password",
+            Role = "Admin"
+        });
+
+        users.Add(new User()
+        {
+            Username = "Tabayag_user",
+            Password = "Tabayag_password",
+            Role = "User"
+        });
+
+        users.Add(new User()
+        {
+            Username = "Tagala_user",
+            Password = "Tagala_password",
+            Role = "User"
+        });
+
+        while (true)
+        {
+            Console.WriteLine("Please select a user role to log-in:");
+            Console.WriteLine("1. Admin");
+            Console.WriteLine("2. Warehouse");
+            Console.WriteLine("3. User");
+
+            var roleChoice = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Please enter your username: ");
+            string username = Console.ReadLine();
+
+            Console.Write("Please enter your password: ");
+            string password = Console.ReadLine();
+
+            User currentUser = null;
+
+            foreach (User user in users)
+            {
+                if (user.Username == username &&
+                    user.Password == password &&
+                    user.Active)
+                {
+                    currentUser = user;
+                    break;
+                }
+            }
+
+            if (currentUser == null)
+            {
+                Console.WriteLine("Invalid login.\n");
+                continue;
+            }
+
+            if (roleChoice == 1 && currentUser.Role == "Admin")
+            {
+                AdminMenu(currentUser);
+            }
+            else if (roleChoice == 2 && currentUser.Role == "Warehouse")
+            {
+                WarehouseMenu(currentUser);
+            }
+            else if (roleChoice == 3 && currentUser.Role == "User")
+            {
+                UserMenu();
+            }
+            else
+            {
+                Console.WriteLine("Role does not match.\n");
+            }
+        }
+    }
+
+    static void AdminMenu(User admin)
+    {
+        while (true)
+        {
+            Console.WriteLine("\nADMIN MENU");
+            Console.WriteLine("1. Update Password");
+            Console.WriteLine("2. Inactivate User");
+            Console.WriteLine("3. Add User");
+            Console.WriteLine("4. Display All Users");
+            Console.WriteLine("5. Display Inactive Users");
+            Console.WriteLine("6. Display Active Users");
+            Console.WriteLine("7. Display Products");
+            Console.WriteLine("8. Display Orders");
+            Console.WriteLine("9. Logout");
+
+            var choice = Convert.ToInt32(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    UpdatePassword(admin);
+                    break;
+
+                case 2:
+                    InactivateUser();
+                    break;
+
+                case 3:
+                    AddUser();
+                    break;
+
+                case 4:
+                    foreach (User user in users)
+                    {
+                        Console.WriteLine(user.Username +
+                            " - " + user.Role +
+                            " - Active: " + user.Active);
+                    }
+                    break;
+
+                case 5:
+                    foreach (User user in users)
+                    {
+                        if (!user.Active)
+                            Console.WriteLine(user.Username);
+                    }
+                    break;
+
+                case 6:
+                    foreach (User user in users)
+                    {
+                        if (user.Active)
+                            Console.WriteLine(user.Username);
+                    }
+                    break;
+
+                case 7:
+                    DisplayProducts();
+                    break;
+
+                case 8:
+                    DisplayOrders();
+                    break;
+
+                case 9:
+                    return;
+            }
+        }
+    }
+
+    static void UpdatePassword(User admin)
+    {
+        List<User> activeUsers = new List<User>();
+
+        Console.WriteLine("1. My Account");
+        activeUsers.Add(admin);
+
+        var count = 2;
+
+        foreach (User user in users)
+        {
+            if (user.Active && user != admin)
+            {
+                Console.WriteLine(count + ". " + user.Username);
+                activeUsers.Add(user);
+                count++;
+            }
+        }
+
+        var choice = Convert.ToInt32(Console.ReadLine());
+
+        User selectedUser = activeUsers[choice - 1];
+
+        Console.Write("Please enter new password: ");
+        string pass1 = Console.ReadLine();
+
+        Console.Write("Please confirm password: ");
+        string pass2 = Console.ReadLine();
+
+        if (pass1 == pass2)
+        {
+            selectedUser.Password = pass1;
+            Console.WriteLine("Password updated.");
+        }
+        else
+        {
+            Console.WriteLine("Password does not match.");
+        }
+    }
+
+    static void InactivateUser()
+    {
+        Console.Write("Enter username to inactivate: ");
+        string username = Console.ReadLine();
+
+        foreach (User user in users)
+        {
+            if (user.Username == username)
+            {
+                user.Active = false;
+                Console.WriteLine("User inactivated.");
+                return;
+            }
+        }
+    }
+
+    static void AddUser()
+    {
+        User newUser = new User();
+
+        Console.Write("Username: ");
+        newUser.Username = Console.ReadLine();
+
+        Console.Write("Password: ");
+        newUser.Password = Console.ReadLine();
+
+        Console.Write("Role (Warehouse/User): ");
+        newUser.Role = Console.ReadLine();
+
+        users.Add(newUser);
+
+        Console.WriteLine("User added.");
+    }
+
+    static void WarehouseMenu(User warehouseUser)
+    {
+        while (true)
+        {
+            Console.WriteLine("\nWAREHOUSE MENU");
+            Console.WriteLine("1. Add Products");
+            Console.WriteLine("2. Display Products");
+            Console.WriteLine("3. Logout");
+
+            int choice = Convert.ToInt32(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    AddProducts(warehouseUser);
+                    break;
+
+                case 2:
+                    DisplayProducts();
+                    break;
+
+                case 3:
+                    return;
+            }
+        }
+    }
+
+    static void AddProducts(User warehouseUser)
+    {
+        Console.Write("Number of products: ");
+        int count = Convert.ToInt32(Console.ReadLine());
+
+        for (int i = 1; i <= count; i++)
+        {
+            Product product = new Product();
+
+            Console.Write(i + ". Product Name: ");
+            product.Name = Console.ReadLine();
+
+            Console.Write(i + ". Quantity: ");
+            product.Quantity = Convert.ToInt32(Console.ReadLine());
+
+            product.CreatedDate = DateTime.Now;
+            product.CreatedBy = warehouseUser.Username;
+
+            products.Add(product);
+        }
+
+        Console.WriteLine("All products have been successfully created.");
+    }
+
+    static void DisplayProducts()
+    {
+        foreach (Product product in products)
+        {
+            Console.WriteLine("\nProduct Name: " + product.Name);
+            Console.WriteLine("Quantity: " + product.Quantity);
+            Console.WriteLine("Active: Yes");
+            Console.WriteLine("Created Date: " + product.CreatedDate);
+            Console.WriteLine("Created By: " + product.CreatedBy);
+        }
+    }
+
+    static void UserMenu()
+    {
+        while (true)
+        {
+            Console.WriteLine("\nUSER MENU");
+            Console.WriteLine("1. Order");
+            Console.WriteLine("2. Display Order");
+            Console.WriteLine("3. Logout");
+
+            int choice = Convert.ToInt32(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    CreateOrder();
+                    break;
+
+                case 2:
+                    DisplayOrders();
+                    break;
+
+                case 3:
+                    return;
+            }
+        }
+    }
+
+    static void CreateOrder()
+    {
+        if (products.Count == 0)
+        {
+            Console.WriteLine("No products available.");
+            return;
+        }
+
+        for (int i = 0; i < products.Count; i++)
+        {
+            Console.WriteLine((i + 1) + ". Product Name: " +
+                              products[i].Name);
+            Console.WriteLine("Quantity: " +
+                              products[i].Quantity);
+        }
+
+        Console.Write("Select product number: ");
+        var productChoice =
+            Convert.ToInt32(Console.ReadLine());
+
+        Console.Write("Enter order quantity: ");
+        var qty = Convert.ToInt32(Console.ReadLine());
+
+        Product selected =
+            products[productChoice - 1];
+
+        if (qty <= selected.Quantity)
+        {
+            selected.Quantity -= qty;
+
+            Order order = new Order();
+            order.ProductName = selected.Name;
+            order.Quantity = qty;
+
+            orders.Add(order);
+
+            Console.WriteLine("Order successfully created.");
+        }
+        else
+        {
+            Console.WriteLine("Not enough stock.");
+        }
+    }
+
+    static void DisplayOrders()
+    {
+        foreach (Order order in orders)
+        {
+            Console.WriteLine("\nOrder Details");
+            Console.WriteLine("Product Name: " +
+                              order.ProductName);
+            Console.WriteLine("Quantity: " +
+                              order.Quantity);
+        }
+    }
+}

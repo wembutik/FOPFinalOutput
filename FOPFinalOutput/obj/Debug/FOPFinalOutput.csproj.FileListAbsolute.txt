@@ -1,0 +1,7 @@
+C:\Users\Angel\source\repos\FOPFinalOutput\FOPFinalOutput\bin\Debug\FOPFinalOutput.exe.config
+C:\Users\Angel\source\repos\FOPFinalOutput\FOPFinalOutput\bin\Debug\FOPFinalOutput.exe
+C:\Users\Angel\source\repos\FOPFinalOutput\FOPFinalOutput\bin\Debug\FOPFinalOutput.pdb
+C:\Users\Angel\source\repos\FOPFinalOutput\FOPFinalOutput\obj\Debug\FOPFinalOutput.csproj.AssemblyReference.cache
+C:\Users\Angel\source\repos\FOPFinalOutput\FOPFinalOutput\obj\Debug\FOPFinalOutput.csproj.CoreCompileInputs.cache
+C:\Users\Angel\source\repos\FOPFinalOutput\FOPFinalOutput\obj\Debug\FOPFinalOutput.exe
+C:\Users\Angel\source\repos\FOPFinalOutput\FOPFinalOutput\obj\Debug\FOPFinalOutput.pdb
